@@ -1,14 +1,18 @@
 services:
 
   ipfs:
-    image: ipfs/go-ipfs:latest
+    image: ipfs/kubo:latest
     container_name: ipfs
     volumes:
       - ./data:/data/ipfs
       - ./export:/export
+      - ./fs_fuse:/ipfs
+      - ./ipns_fuse:/ipns     
     ports:
       - "4001:4001"
       - "4001:4001/udp"
       - "5001:5001"
       - "8080:8080"
     restart: unless-stopped
+    environment:
+      - IPFS_PATH=/data/ipfs
